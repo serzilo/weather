@@ -7,6 +7,7 @@ var gulp = require('gulp'),
 	prefixer = require('gulp-autoprefixer'),
 	cssmin = require('gulp-minify-css'),
 	uglify = require('gulp-uglify'),
+	jshint = require('gulp-jshint'),
 	browserSync = require("browser-sync"),
     reload = browserSync.reload;
 
@@ -20,13 +21,13 @@ var path = {
     src: {
         html:    'src/html/index.html',
         css:     'src/css/main.less',
-        js: 	 'src/js/*.js',
+        js: 	 'src/js/**/*.js',
         js_libs: 'src/js/libs/*.js'
     },
     watch: {
         html:    'src/html/**/*.html',
         css:     'src/css/*.less',
-        js: 	 'src/js/*.js',
+        js: 	 'src/js/**/*.js',
         js_libs: 'src/js/libs/*.js'
     }
 };
@@ -64,7 +65,9 @@ gulp.task('js_libs:build', function () {
 });
 
 gulp.task('js:build', function () {
-	gulp.src(path.src.js)
+	gulp.src([path.src.js, '!' + path.src.js_libs])
+		.pipe(jshint())
+    	.pipe(jshint.reporter('default'))
 		.pipe(uglify())
 		.pipe(gulp.dest(path.build.js))
         .pipe(reload({stream: true}));
