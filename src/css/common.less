@@ -7,9 +7,10 @@ body {
 	display: block;
 	text-decoration: none;
 	outline: none;
+	position: relative;
 
 	&_link {
-		padding: 15px 40px 15px 15px;
+		padding: 15px 30px 15px 15px;
 		color: #323232;
 		background: #fff;
 		font-size: 14/16em;
@@ -22,6 +23,17 @@ body {
 			background: #E2E2E2;
 			padding: 16px 40px 14px 15px;
 		}
+
+		&:after {
+		  .sprite(@next);
+		  position: absolute;
+		  top: 50%;
+		  margin-top: -6px;
+		  right: 10px;
+		  display: block;
+		  content: '';
+		}
+
 	}
 }
 
