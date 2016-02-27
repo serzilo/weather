@@ -8,6 +8,7 @@ var gulp = require('gulp'),
 	cssmin = require('gulp-minify-css'),
 	uglify = require('gulp-uglify'),
 	jshint = require('gulp-jshint'),
+    spritesmith = require('gulp.spritesmith'),
 	browserSync = require("browser-sync"),
     reload = browserSync.reload;
 
@@ -16,19 +17,22 @@ var path = {
         html: 	   'build/',
         css: 	   'build/css/',
         js:  	   'build/js/',
-        js_libs:   'build/js/libs/'
+        js_libs:   'build/js/libs/',
+        images:    'build/images/'
     },
     src: {
         html:    'src/html/index.html',
         css:     'src/css/main.less',
         js: 	 'src/js/**/*.js',
-        js_libs: 'src/js/libs/*.js'
+        js_libs: 'src/js/libs/*.js',
+        sprite:  'src/images/sprite/*.*'
     },
     watch: {
         html:    'src/html/**/*.html',
         css:     'src/css/*.less',
         js: 	 'src/js/**/*.js',
-        js_libs: 'src/js/libs/*.js'
+        js_libs: 'src/js/libs/*.js',
+        sprite:  'src/images/sprite/*.*'
     }
 };
 
@@ -73,8 +77,23 @@ gulp.task('js:build', function () {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('sprite:build', function () {
+    var spriteData = gulp.src(path.src.sprite).pipe(spritesmith({
+        algorithm: 'binary-tree',
+        imgName: 'icons.png',
+        cssName: 'icons.less',
+        imgPath: '../images/icons.png'
+    }));
+    
+    spriteData.img.pipe(gulp.dest(path.build.images));
+    spriteData.css.pipe(gulp.dest('src/css/sprite/'));
+});
+
+
 gulp.task('build', [
 	'html:build',
+    'sprite:build',
+    'css:build',
     'css:build',
     'js_libs:build',
     'js:build'
@@ -95,6 +114,10 @@ gulp.task('watch', function(){
 
     watch([path.watch.js], function(event, cb) {
         gulp.start('js:build');
+    });
+
+    watch([path.watch.sprite], function(event, cb) {
+        gulp.start('sprite:build');
     });
 });
 

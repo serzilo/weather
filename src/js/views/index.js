@@ -10,7 +10,7 @@ define(function() {
 	    	e.preventDefault();
 	    	e.stopPropagation();
 
-	    	this.toggleClass($(e.target), 'active');
+	    	this.toggleClass($(e.currentTarget), 'active');
 
 	    	this.toggleClass($('#header_cities_list'), 'hidden');
 	    },
@@ -20,7 +20,7 @@ define(function() {
 	    	e.preventDefault();
 	    	e.stopPropagation();
 
-	    	this.toggleClass($(e.target), 'active');
+	    	this.toggleClass($(e.currentTarget), 'active');
 
 	    	this.toggleClass($list, 'hidden', function() {
 	    		setTimeout(function() {
