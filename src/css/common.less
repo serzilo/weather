@@ -1,8 +1,28 @@
+body {
+	font-size: 100%;
+}
+
 .btn {
 	cursor: pointer;
 	display: block;
 	text-decoration: none;
 	outline: none;
+
+	&_link {
+		padding: 15px 40px 15px 15px;
+		color: #323232;
+		background: #fff;
+		font-size: 14/16em;
+
+		&:hover {
+			background: #f5f5f5;
+		}
+
+		&:active {
+			background: #E2E2E2;
+			padding: 16px 40px 14px 15px;
+		}
+	}
 }
 
 .left {
@@ -15,4 +35,21 @@
 
 .icon {
 	display: block;
+}
+
+.block {
+	background: #fff;
+	padding: 15px;
+}
+
+.input-text {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #c0c6d2;
+	border-radius: 0;
+	outline: 0;
+	box-shadow: inset 0px 3px 5px #cdd2de;
+	font-size: 1em;
 }
