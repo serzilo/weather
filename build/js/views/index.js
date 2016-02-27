@@ -1,0 +1,1 @@
+define(function(){var e=Backbone.View.extend({el:$("#app"),template:_.template($("#main_template").html()),render:function(){this.$el.html(this.template())}});return new e});

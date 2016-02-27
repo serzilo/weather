@@ -14,14 +14,23 @@
     </head>
     <body>
         <div id="app"></div>
-
-        <script type="text/template" id="header">
-        	header
-        </script>
-        <script type="text/template" id="menu">
-        	menu
+        
+        <script type="text/template" id="main_template">
+        	<div class="header" id="header">
+        		<div class="header__layout clearfix">
+        			<a href="#" class="btn header__btn left">
+        				<i class="icon icon_menu"></a>
+        			</a>
+        			<a href="#" class="btn header__btn right">
+        				<i class="icon icon_search"></a>
+        			</a>
+        		</div>
+        	</div>
+        	<div class="content" id="content">
+        	
+        	</div>
         </script>
         
-        <script data-main="js/app" src="js/libs/require.js"></script>
+        <script data-main="js/boot" src="js/libs/require.js"></script>
     </body>
 </html>
