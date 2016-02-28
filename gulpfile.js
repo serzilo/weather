@@ -25,14 +25,16 @@ var path = {
         css:     'src/css/main.less',
         js: 	 'src/js/**/*.js',
         js_libs: 'src/js/libs/*.js',
-        sprite:  'src/images/sprite/*.*'
+        sprite:  'src/images/sprite/*.*',
+        static:  'src/images/static/*.*'
     },
     watch: {
         html:    'src/html/**/*.html',
         css:     'src/css/*.less',
         js: 	 'src/js/**/*.js',
         js_libs: 'src/js/libs/*.js',
-        sprite:  'src/images/sprite/*.*'
+        sprite:  'src/images/sprite/*.*',
+        static:  'src/images/static/*.*'
     }
 };
 
@@ -89,10 +91,16 @@ gulp.task('sprite:build', function () {
     spriteData.css.pipe(gulp.dest('src/css/sprite/'));
 });
 
+gulp.task('static:build', function () {
+    gulp.src(path.src.static)
+        .pipe(gulp.dest(path.build.images));
+}); 
+
 
 gulp.task('build', [
 	'html:build',
     'sprite:build',
+    'static:build',
     'css:build',
     'css:build',
     'js_libs:build',
@@ -118,6 +126,10 @@ gulp.task('watch', function(){
 
     watch([path.watch.sprite], function(event, cb) {
         gulp.start('sprite:build');
+    });
+
+    watch([path.watch.static], function(event, cb) {
+        gulp.start('static:build');
     });
 });
 
