@@ -1,0 +1,1 @@
+define(function(){var e=Backbone.View.extend({template:_.template($("#content_template").html()),render:function(){return this.$el.html(this.template()),this}});return e});

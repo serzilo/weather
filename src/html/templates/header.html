@@ -1,40 +1,44 @@
-<div class="header" id="header">
-	<div class="header__layout clearfix">
-		<a href="#" class="btn header__btn left" id="header_menu">
-			<i class="icon icon_menu"></i>
-		</a>
+<script type="text/template" id="header_template">
+	<div class="header" id="header">
+		<div class="header__layout clearfix">
+			<a href="#" class="btn header__btn left" id="header_menu">
+				<i class="icon icon_menu"></i>
+			</a>
 
-		<a href="#" class="btn header__btn right" id="header_search">
-			<i class="icon icon_search"></i>
-		</a>
+			<a href="#" class="btn header__btn right" id="header_search">
+				<i class="icon icon_search"></i>
+			</a>
 
-		<div class="header__drop-down hidden" id="header_search_list">
-			<div class="block">
-				<input type="search" value="" placeholder="Enter city" class="input-text" id="search-input" />
+			<div class="header__drop-down hidden" id="header_search_list">
+				<div class="block">
+					<input type="search" value="" placeholder="Enter city" autocapitalize="off" autocorrect="off" autocomplete="off" class="input-text" id="search_input" />
+				</div>
+
+				<ul class="header__list">
+					<li class="header__list_item">
+						<a href="#" class="btn btn_link">Saint Petersburg</a>
+					</li>
+					<li class="header__list_item">
+						<a href="#" class="btn btn_link">Moscow</a>
+					</li>
+					<li class="header__list_item">
+						<a href="#" class="btn btn_link">London</a>
+					</li>
+				</ul>
 			</div>
 
-			<ul class="header__list">
-				<li class="header__list_item">
-					<a href="#" class="btn btn_link">Saint Petersburg</a>
-				</li>
-				<li class="header__list_item">
-					<a href="#" class="btn btn_link">Moscow</a>
-				</li>
-				<li class="header__list_item">
-					<a href="#" class="btn btn_link">London</a>
-				</li>
-			</ul>
-		</div>
-
-		<div class="header__drop-down hidden" id="header_cities_list">
-			<ul class="header__list">
-				<li class="header__list_item">
-					<a href="#" class="btn btn_link">Washigton</a>
-				</li>
-				<li class="header__list_item">
-					<a href="#" class="btn btn_link">Sydney</a>
-				</li>
-			</ul>
+			<div class="header__drop-down hidden" id="header_cities_list">
+				<ul class="header__list">
+					<li class="header__list_item">
+						<a href="#" class="btn btn_link">Washigton</a>
+					</li>
+					<li class="header__list_item">
+						<a href="#" class="btn btn_link">Sydney</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<div id="overlay" class="overlay"></div>
+</script>

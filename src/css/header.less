@@ -58,3 +58,22 @@
 .icon_menu {
   .sprite(@menu);
 }
+
+.overlay {
+	position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background: rgba(0,0,0,.15);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease-out;
+}
+
+.overlay_show{
+	visibility: visible;
+	opacity: 1;
+}
