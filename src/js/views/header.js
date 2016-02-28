@@ -4,31 +4,79 @@ define(function() {
 	    events: {
 	    	'click #header_menu'   : 'showMenu',
 	    	'click #header_search' : 'showSearch',
+	    	'click #overlay' 	   : 'overlayHandler',
 	    	'input #search_input'  : 'keydownHandler'
+	    },
+	    openMenu: false,
+	    initialize: function() {
+	    	this.on('header_control_clicked', function(data) {
+	    		this.menusController(data);
+	    	});
 	    },
 	    showMenu: function(e){
 	    	e.preventDefault();
 	    	e.stopPropagation();
 
-	    	this.toggleClass($(e.currentTarget), 'active');
-
-	    	this.toggleClass($('#header_cities_list'), 'hidden');
+	    	this.trigger('header_control_clicked', {type: 'showMenu', context: this});
 	    },
 	    showSearch: function(e){
-	    	var $list = $('#header_search_list');
-
 	    	e.preventDefault();
 	    	e.stopPropagation();
 
-	    	this.toggleClass($(e.currentTarget), 'active');
+	    	this.trigger('header_control_clicked', {type: 'showSearch', context: this});
+	    },
+	    overlayHandler: function(e){
+	    	this.trigger('header_control_clicked', {type: 'overlay', context: this, target: e.target});
+	    },
+	    menusController: function(data) {
+	    	var _this = data.context,
+	    		actions = {
+	    			showMenu: {
+	    				id: 'header_menu',
+	    				func: function() {
+		    				_this.toggleClass($('#header_cities_list'), 'hidden');
+		    			}
+	    			},
+	    			showSearch: {
+	    				id: 'header_search',
+	    				func: function() {
+	    					var $list = $('#header_search_list');
 
-	    	this.toggleClass($('#overlay'), 'overlay_show');
+		    				_this.toggleClass($list, 'hidden', function() {
+					    		setTimeout(function() {
+					    			$list.find('#search_input').focus();
+					    		}, 0);
+		    				});
+	    				}
+	    			}
+	    		};
 
-	    	this.toggleClass($list, 'hidden', function() {
-	    		setTimeout(function() {
-	    			$list.find('#search_input').focus();
-	    		}, 0);
-	    	});
+	    	if (data.type == 'overlay') {
+	    		// overlay clicked
+	    		$(data.target).removeClass('overlay_show');
+	    		actions[_this.openMenu].func();
+	    		$('#' + actions[_this.openMenu].id).removeClass('active');
+
+	    		_this.openMenu = false;
+	    	} else if (_this.openMenu === false || _this.openMenu == data.type) {
+	    		// open/close menu (no others menus open)
+	    		_this.toggleClass($('#' + actions[data.type].id), 'active');
+	    		actions[data.type].func();
+	    		_this.toggleClass($('#overlay'), 'overlay_show');
+
+	    		_this.openMenu = (_this.openMenu == data.type ? false : data.type);
+	    	} else {
+	    		// open menu and close opened before menu
+	    		_.chain(actions)
+	    			.keys()
+	    			.each(function(k) {
+		    			actions[k].func();
+		    			_this.toggleClass($('#' + actions[k].id), 'active');
+		    		});
+
+	    		_this.openMenu = data.type;
+	    	}
+
 	    },
 	    toggleClass: function(e, classValue, cb) {
 	    	e.toggleClass(classValue);
