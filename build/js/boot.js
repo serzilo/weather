@@ -1,1 +1,1 @@
-require.config({paths:{jQuery:"libs/jquery",Underscore:"libs/underscore",Backbone:"libs/backbone"},shim:{Backbone:["Underscore","jQuery"],app:["Backbone"]}}),require(["app"],function(e){e.initialize()});
+require.config({paths:{libs:"libs"},shim:{app:["libs"]}}),require(["app"],function(i){i.initialize()});

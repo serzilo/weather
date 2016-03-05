@@ -1,6 +1,7 @@
 define(function() { 
 	var headerView = Backbone.View.extend({
 	    template: _.template($('#header_template').html()),
+	    listLinkTemplate: _.template($('#list_link_template').html()),
 	    events: {
 	    	'click #header_menu'   : 'showMenu',
 	    	'click #header_search' : 'showSearch',
@@ -91,7 +92,17 @@ define(function() {
 	    	console.log(value);
 	    },
 		render: function() { 
-			this.$el.html(this.template());
+			var _this = this,
+				tempData = [
+					{link: 123, name: 'New York'},
+					{link: 456, name: 'London'}
+				],
+				cityies = tempData.map(function(city) {
+					return _this.listLinkTemplate(city);
+				});
+
+				this.$el.html(this.template());
+				this.$el.find('#header_cities_list_ul').html(cityies.join(''));
 
 			return this;
 		}

@@ -7,6 +7,8 @@ var gulp = require('gulp'),
 	prefixer = require('gulp-autoprefixer'),
 	cssmin = require('gulp-minify-css'),
 	uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+    size = require('gulp-size'),
 	jshint = require('gulp-jshint'),
     spritesmith = require('gulp.spritesmith'),
 	browserSync = require("browser-sync"),
@@ -17,14 +19,14 @@ var path = {
         html: 	   'build/',
         css: 	   'build/css/',
         js:  	   'build/js/',
-        js_libs:   'build/js/libs/',
         images:    'build/images/'
     },
     src: {
         html:    'src/html/index.html',
         css:     'src/css/main.less',
         js: 	 'src/js/**/*.js',
-        js_libs: 'src/js/libs/*.js',
+        js_libs_path: 'src/js/libs/',
+        js_libs_list: 'jquery.js,underscore.js,backbone.js,backbone.localStorage.js',
         sprite:  'src/images/sprite/*.*',
         static:  'src/images/static/*.*'
     },
@@ -65,13 +67,29 @@ gulp.task('css:build', function () {
 });
 
 gulp.task('js_libs:build', function () {
-	gulp.src(path.src.js_libs)
-		.pipe(gulp.dest(path.build.js_libs))
+    // copy Require.js
+    gulp.src([path.src.js_libs_path + 'require.js'])
+        .pipe(uglify())
+        .pipe(gulp.dest(path.build.js))
+
+    // libs concatination
+    console.log('Required libs:');
+    var libsArray = path.src.js_libs_list.split(','),
+        libsArrayFixed = libsArray.map(function(item, num) {
+            console.log((num+1) + '. ' + path.src.js_libs_path + item)
+            return path.src.js_libs_path + item;
+        });
+
+    gulp.src(libsArrayFixed)
+        .pipe(uglify())
+        .pipe(concat('libs.js'))
+        .pipe(gulp.dest(path.build.js))
+        .pipe(size())
         .pipe(reload({stream: true}));
 });
 
 gulp.task('js:build', function () {
-	gulp.src([path.src.js, '!' + path.src.js_libs])
+	gulp.src([path.src.js, '!' + path.src.js_libs_path + '*.js'])
 		.pipe(jshint())
     	.pipe(jshint.reporter('default'))
 		.pipe(uglify())
