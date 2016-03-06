@@ -1,1 +1,1 @@
-define(["views/index"],function(i){var n=function(){i.render()};return{initialize:n}});
+define(["views/main","routers/router"],function(e,i){var n=function(){e.render()};return{initialize:n}});

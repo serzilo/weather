@@ -87,9 +87,29 @@ define(function() {
 	    	}
 	    },
 	    keydownHandler: function(e) {
-	    	var value = e.target.value;
+	    	var value = e.target.value,
+	    		_this = this,
+	    		$searchList = _this.$el.find('#header_search_list_ul');
 
-	    	console.log(value);
+	    	if (value.length > 2){
+		    	$.getJSON(
+					"http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+value,
+					function (data) {
+						var re = new RegExp(value, 'gi'),
+							cities = data.map(function(city) {
+								var fixedName = city.replace(re, function(str) {
+									return "<b>" + str + "</b>";
+								});
+
+								return _this.listLinkTemplate({name: fixedName, link: encodeURIComponent(city)});
+							});
+
+						$searchList.html(cities.join(''));
+					}
+				);
+	    	} else {
+	    		$searchList.html('');
+	    	}
 	    },
 		render: function() { 
 			var _this = this,
@@ -97,12 +117,12 @@ define(function() {
 					{link: 123, name: 'New York'},
 					{link: 456, name: 'London'}
 				],
-				cityies = tempData.map(function(city) {
+				cities = tempData.map(function(city) {
 					return _this.listLinkTemplate(city);
 				});
 
 				this.$el.html(this.template());
-				this.$el.find('#header_cities_list_ul').html(cityies.join(''));
+				this.$el.find('#header_cities_list_ul').html(cities.join(''));
 
 			return this;
 		}

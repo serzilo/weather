@@ -1,6 +1,6 @@
-define(['views/index'], function(indexView) { 
+define(['views/main', 'routers/router'], function(mainView, router) { 
 	var initialize = function() {
-	    indexView.render();
+	    mainView.render();
 	};
 	return {
 		initialize: initialize
