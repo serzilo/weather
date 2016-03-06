@@ -1,33 +1,31 @@
-define(function() { 
-// define(['view/search','view/city','view/index'], function(SearchView, CityView, IndexView) { 
+define(['views/search', 'views/index', 'views/city'], function(SearchView, IndexView, CityView) { 
 	var Router = Backbone.Router.extend({
 		currentView: null,
 		routes: {
-	        "search": "search",
+	        "search/": "search",
 	        "city/:city": "city",
 	        "": "index"
 	    },
 	    changeView: function(view) {
-			if ( null != this.currentView ) {
+			if ( null !== this.currentView ) {
 				this.currentView.undelegateEvents(); 
 			}
 			this.currentView = view;
 			this.currentView.render(); 
 		},
 	    search: function() {
-	    	//this.changeView(new SearchView());
+	    	this.changeView(new SearchView());
 	    	console.log('search');
 	    },
 	    city: function() {
-	    	//this.changeView(new CityView());
+	    	this.changeView(new CityView());
 	    	console.log('city');
 	    },
 	    index: function() {
-	    	//this.changeView(new IndexView());
+	    	this.changeView(new IndexView());
 	    	console.log('index');
 	    }
 	});
 
-	new Router();
-	Backbone.history.start();
+	return Router;
 });

@@ -1,10 +1,13 @@
-define(['views/header','views/content'],function(headerView, contentView) { 
+define(['routers/router'],function(Router) { 
 	var indexView = Backbone.View.extend({
 	    el: $('#app'),
+	    template: _.template($('#main_template').html()),
 
 		render: function() { 
-			this.$el.html((new headerView()).render().$el)
-				 .append((new contentView()).render().$el);
+			this.$el.html(this.template());
+
+			new Router();
+			Backbone.history.start();
 		}
 	});
 	return new indexView(); 

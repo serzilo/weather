@@ -1,1 +1,1 @@
-define(["views/header","views/content"],function(e,n){var r=Backbone.View.extend({el:$("#app"),render:function(){this.$el.html((new e).render().$el).append((new n).render().$el)}});return new r});
+define(["routers/router"],function(e){var t=Backbone.View.extend({el:$("#app"),template:_.template($("#main_template").html()),render:function(){this.$el.html(this.template()),new e,Backbone.history.start()}});return new t});

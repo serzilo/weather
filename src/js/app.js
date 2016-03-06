@@ -1,4 +1,4 @@
-define(['views/main', 'routers/router'], function(mainView, router) { 
+define(['views/main'], function(mainView, router) { 
 	var initialize = function() {
 	    mainView.render();
 	};

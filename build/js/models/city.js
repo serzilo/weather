@@ -1,1 +1,1 @@
-define(function(){Backbone.Model.extend({defaults:{name:"City needs in a name",id:null}})});
+define(function(){var e=Backbone.Model.extend({defaults:{name:"City needs in a name",link:null}});return e});

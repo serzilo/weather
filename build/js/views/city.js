@@ -1,0 +1,1 @@
+define(["common"],function(t){var e=Backbone.View.extend({template:_.template($("#city_template").html()),render:function(){t.toggleHeaderButtons(),$("#content").html(this.$el.html(this.template()))}});return e});
