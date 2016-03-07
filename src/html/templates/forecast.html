@@ -1,0 +1,46 @@
+<script type="text/template" id="forecast_template">
+	<div class="block">
+		Forecast
+
+		<div class="forecast">
+			<table>
+				<tr>
+					<%
+					    _.each(list,function(item, key){
+
+					    var date = new Date(item.dt_txt),
+					    	day = date.getDate(),
+					    	months = ["January","February","March","April","May","June","July","August","September","October","November","December"],
+					    	month = months[date.getMonth()];
+
+					    console.log(day);
+					%>
+
+					<td>
+						<%= day %> <%= month %>  <br />
+						Temp: <%= item.main.temp %>&deg;C <br />
+						Pressure: <%= item.main.pressure %> <br />
+						Humidity: <%= item.main.humidity %>% <br />
+						Cloudiness: <%= item.clouds.all %>% <br />
+						Wind speed: <%= item.wind.speed %> meter/sec <br />
+
+						<%
+						    _.each(item.weather,function(weather, key){
+						%>
+
+							<%= weather.description %>
+							<img src="images/weather/<%= weather.icon %>.png" alt="<%= weather.description %>" />
+						
+						<%
+						    });
+						%>
+					</td>
+
+					<%
+					    });
+					%>
+				</tr>
+			</table>
+		</div>
+	</div>
+</script>

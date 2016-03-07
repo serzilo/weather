@@ -1,9 +1,41 @@
-define(['common'], function(Common) { 
+define(['collections/cities', 'common/index', 'common/forecast'], function(Cities, Index, Forecast) { 
 	var CityView = Backbone.View.extend({
 		template: _.template($('#city_template').html()),
+		forecastTemplate: _.template($('#forecast_template').html()),
+		events: {
+			'click .js-bookmark_toggle': 'bookmarkToggle',
+			'click .js-update_forecast': 'forecastUpdate'
+		},
+		initialize: function(city) {
+            this.city = city;
+        },
 		render: function() {
-			Common.toggleHeaderButtons();
-	    	$('#content').html(this.$el.html(this.template()));
+			Index.toggleHeaderButtons();
+
+	    	$('#content').html(this.$el.html(this.template({city: this.city})));
+
+	    	this.forecastRequest();
+	    },
+	    forecastRequest: function() {
+	    	var _this = this;
+
+	    	Forecast.getForecast(this.city, function(data) {
+            	console.dir(data);
+
+            	_this.$('#city_forecast').html(_this.forecastTemplate(data));
+            });
+	    },
+	    forecastUpdate:  function(e) {
+	    	e.preventDefault();
+	    	e.stopPropagation();
+
+	    	this.forecastRequest();
+	    },
+	    bookmarkToggle: function(e) {
+	    	e.preventDefault();
+	    	e.stopPropagation();
+
+	    	console.log(1);
 	    }
 	});
 	return CityView; 

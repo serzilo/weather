@@ -1,4 +1,4 @@
-define(['common'], function(Common) { 
+define(['common/index'], function(Index) { 
 	var searchView = Backbone.View.extend({
 		template: _.template($('#list_template').html()),
 		listLinkTemplate: _.template($('#list_link_template').html()),
@@ -6,7 +6,7 @@ define(['common'], function(Common) {
 	    	'input #search_input'  : 'keydownHandler'
 	    },
 	    render: function() {
-	    	Common.toggleHeaderButtons('search');
+	    	Index.toggleHeaderButtons('search');
 	    	$('#content').html(this.$el.html(this.template({showSearchInput: true})));
 
 	    	this.$('#search_input').focus();

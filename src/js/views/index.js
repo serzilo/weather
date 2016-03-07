@@ -1,4 +1,4 @@
-define(['collections/cities', 'common'],function(Cities, Common) { 
+define(['collections/cities', 'common/index'],function(Cities, Index) { 
 	var indexView = Backbone.View.extend({
 		template: _.template($('#list_template').html()),
 		listLinkTemplate: _.template($('#list_link_template').html()),
@@ -6,7 +6,7 @@ define(['collections/cities', 'common'],function(Cities, Common) {
 			this.listenTo(Cities, 'reset', this.fillList);
 		},
 		render: function() {
-			Common.toggleHeaderButtons('index');
+			Index.toggleHeaderButtons('index');
 	    	$('#content').html(this.$el.html(this.template()));
 
 	    	this.$list = this.$('#cities_list_ul');

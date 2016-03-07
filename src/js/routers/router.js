@@ -17,8 +17,8 @@ define(['views/search', 'views/index', 'views/city'], function(SearchView, Index
 	    	this.changeView(new SearchView());
 	    	console.log('search');
 	    },
-	    city: function() {
-	    	this.changeView(new CityView());
+	    city: function(city) {
+	    	this.changeView(new CityView(city));
 	    	console.log('city');
 	    },
 	    index: function() {

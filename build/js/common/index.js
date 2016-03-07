@@ -1,0 +1,1 @@
+define(function(){var e={toggleHeaderButtons:function(e){var t=$(".header__btn").removeClass("active");e&&t.filter(".js-"+e).addClass("active")}};return e});
