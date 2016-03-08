@@ -6,6 +6,9 @@ define(function() {
 			if (type){
 				buttons.filter('.js-' + type).addClass('active');
 			}
+		},
+		setTitle: function(title) {
+			document.title = title;
 		}
 	};
 

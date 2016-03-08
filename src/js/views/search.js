@@ -7,6 +7,8 @@ define(['common/index'], function(Index) {
 	    },
 	    render: function() {
 	    	Index.toggleHeaderButtons('search');
+	    	Index.setTitle('Search city');
+	    	
 	    	$('#content').html(this.$el.html(this.template({showSearchInput: true})));
 
 	    	this.$('#search_input').focus();

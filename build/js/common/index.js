@@ -1,1 +1,1 @@
-define(function(){var e={toggleHeaderButtons:function(e){var t=$(".header__btn").removeClass("active");e&&t.filter(".js-"+e).addClass("active")}};return e});
+define(function(){var e={toggleHeaderButtons:function(e){var t=$(".header__btn").removeClass("active");e&&t.filter(".js-"+e).addClass("active")},setTitle:function(e){document.title=e}};return e});

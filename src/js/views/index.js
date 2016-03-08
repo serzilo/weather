@@ -7,6 +7,8 @@ define(['collections/cities', 'common/index'],function(Cities, Index) {
 		},
 		render: function() {
 			Index.toggleHeaderButtons('index');
+			Index.setTitle('My cities');
+
 	    	$('#content').html(this.$el.html(this.template()));
 
 	    	this.$list = this.$('#cities_list_ul');

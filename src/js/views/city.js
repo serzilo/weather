@@ -11,6 +11,7 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
         },
 		render: function() {
 			Index.toggleHeaderButtons();
+			Index.setTitle('Forecast: ' + this.city);
 
 	    	$('#content').html(this.$el.html(this.template({city: this.city})));
 

@@ -53,7 +53,7 @@
         </script>
         <script type="text/template" id="city_template">
         	<div class="block">
-        		<h1><%= city %></h1>
+        		<h1 class="title"><%= city %></h1>
         		<a href="#" class="js-bookmark_toggle">+</a>
         		<a href="#" class="js-update_forecast">Update Forecast</a>
         
@@ -61,49 +61,96 @@
         	</div>
         </script>
         <script type="text/template" id="forecast_template">
-        	<div class="block">
-        		Forecast
+        	<div class="forecast">
+        		<%
+        			var previousDay = null;
         
-        		<div class="forecast">
-        			<table>
-        				<tr>
-        					<%
-        					    _.each(list,function(item, key){
+        		    _.each(list, function(item, key){
         
-        					    var date = new Date(item.dt_txt),
-        					    	day = date.getDate(),
-        					    	months = ["January","February","March","April","May","June","July","August","September","October","November","December"],
-        					    	month = months[date.getMonth()];
+        		    var date = new Date(item.dt_txt),
+        		    	day = date.getDate(),
+        		    	months = ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        		    	month = months[date.getMonth()],
+        		    	hours = date.getHours(),
+        		    	minutes = date.getMinutes(),
+        		    	time = hours + ':' + (minutes < 10 ? '0' : '') + minutes,
+        		    	showNewDay = (previousDay == day ? false : true);
         
-        					    console.log(day);
-        					%>
+        		    previousDay = day;
+        		%>
         
-        					<td>
-        						<%= day %> <%= month %>  <br />
-        						Temp: <%= item.main.temp %>&deg;C <br />
-        						Pressure: <%= item.main.pressure %> <br />
-        						Humidity: <%= item.main.humidity %>% <br />
-        						Cloudiness: <%= item.clouds.all %>% <br />
-        						Wind speed: <%= item.wind.speed %> meter/sec <br />
+        		<% if (showNewDay == true) { %>
+        			<div class="forecast__date">
+        				<%= day %> <%= month %>
+        			</div>
+        		<% } %>
         
-        						<%
-        						    _.each(item.weather,function(weather, key){
-        						%>
+        		<div class="forecast__item">
+        			<div class="forecast__description">
+        				<div class="forecast__time">
+        					<%= time %>
+        				</div>
         
-        							<%= weather.description %>
-        							<div class="icon icon_<%= weather.icon %>" title="<%= weather.description %>"></div>
-        						
-        						<%
-        						    });
-        						%>
-        					</td>
+        				<%
+        				    _.each(item.weather,function(weather, key){
+        				%>
+        					<div>
+        						<div class="icon icon_<%= weather.icon %> icon_weather" title="<%= weather.description %>"></div>
         
-        					<%
-        					    });
-        					%>
-        				</tr>
-        			</table>
+        						<span class="forecast__weather-description"><%= weather.description %></span>
+        					</div>
+        				<%
+        				    });
+        				%>
+        
+        				<table class="forecast__conditions">
+        					<tr>
+        						<td>
+        							<span class="forecast__label">Temp:</span> 
+        						</td>
+        						<td>
+        							<% if (item.main.temp > 0) { %>+<% } %><%= item.main.temp %>&deg;C
+        						</td>
+        					</tr>	
+        					<tr>
+        						<td>
+        							<span class="forecast__label">Pressure:</span> 
+        						</td>
+        						<td>
+        							<%= item.main.pressure %>
+        						</td>
+        					</tr>	
+        					<tr>
+        						<td>
+        							<span class="forecast__label">Humidity:</span> 
+        						</td>
+        						<td>
+        							<%= item.main.humidity %>%
+        						</td>
+        					</tr>	
+        					<tr>
+        						<td>
+        							<span class="forecast__label">Cloudiness:</span> 
+        						</td>
+        						<td>
+        							<%= item.clouds.all %>%
+        						</td>
+        					</tr>	
+        					<tr>
+        						<td>
+        							<span class="forecast__label">Wind speed:</span> 
+        						</td>
+        						<td>
+        							<%= item.wind.speed %> meter/sec 
+        						</td>
+        					</tr>
+        				</table>	
+        			</div>
         		</div>
+        
+        		<%
+        		    });
+        		%>
         	</div>
         </script>
         
