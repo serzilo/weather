@@ -8,19 +8,23 @@ body {
 	text-decoration: none;
 	outline: none;
 	position: relative;
+	color: #323232;
+	background: #fff;
+	font-size: 14/16em;
+
+	
+	.list__item_active &{
+		background: #f5f5f5;
+	}
+
+	&:active {
+		background: #E2E2E2;
+	}
 
 	&_link {
 		padding: 15px 30px 15px 15px;
-		color: #323232;
-		background: #fff;
-		font-size: 14/16em;
-
-		&:hover {
-			background: #f5f5f5;
-		}
 
 		&:active {
-			background: #E2E2E2;
 			padding: 16px 40px 14px 15px;
 		}
 
@@ -32,6 +36,30 @@ body {
 			right: 10px;
 			display: block;
 			content: '';
+		}
+	}
+
+	&_button {
+		text-align: center;
+		border: 1px solid #cdd4e1;
+		padding: 12px 15px;
+		border-radius: 3px;
+
+		&:hover {
+			background: #f5f5f5;
+		}
+
+		& .icon_inline {
+			margin-right: 3px;
+		}
+
+		&:active {
+			padding: 13px 15px 11px 15px;
+		}
+		
+		&:active,
+		&.active {
+			background: #E2E2E2;
 		}
 	}
 }
@@ -46,6 +74,10 @@ body {
 
 .icon {
 	display: block;
+
+	.active &_animate_rotate {
+		animation: animateRotate 0.9s linear infinite;
+	}
 }
 
 .block {
@@ -89,4 +121,22 @@ body {
 	font-size: 19/16em;
 	padding: 0;
 	margin: 0 0 15px 0;
+}
+
+.icon_inline {
+	display: inline-block !important;
+	vertical-align: middle;
+}
+
+.icon_reload_black {
+  .sprite(@reload-black);
+}
+
+@keyframes animateRotate {
+    0% {
+       transform: rotate(0deg);
+    }
+    100% {
+       transform: rotate(360deg);
+    }
 }

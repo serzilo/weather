@@ -1,8 +1,15 @@
 <script type="text/template" id="city_template">
 	<div class="block">
+		<a href="#" class="js-bookmark_toggle right">+</a>
+
 		<h1 class="title"><%= city %></h1>
-		<a href="#" class="js-bookmark_toggle">+</a>
-		<a href="#" class="js-update_forecast">Update Forecast</a>
+
+		<div class="clearfix"></div>
+
+		<a href="#" class="btn btn_button js-update_forecast">
+			<div class="icon icon_animate_rotate icon_inline icon_reload_black"></div>
+			Update Forecast
+		</a>
 
 		<div id="city_forecast"></div>
 	</div>

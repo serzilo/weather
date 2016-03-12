@@ -18,12 +18,17 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 	    	this.forecastRequest();
 	    },
 	    forecastRequest: function() {
-	    	var _this = this;
+	    	var _this = this,
+	    		updateForecastButton = $('.js-update_forecast');
+
+	    	updateForecastButton.addClass('active');
 
 	    	Forecast.getForecast(this.city, function(data) {
             	console.dir(data);
 
             	_this.$('#city_forecast').html(_this.forecastTemplate(data));
+
+            	updateForecastButton.removeClass('active');
             });
 	    },
 	    forecastUpdate:  function(e) {
