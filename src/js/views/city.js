@@ -3,17 +3,21 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 		template: _.template($('#city_template').html()),
 		forecastTemplate: _.template($('#forecast_template').html()),
 		events: {
-			'click .js-bookmark_toggle': 'bookmarkToggle',
-			'click .js-update_forecast': 'forecastUpdate'
+			'click #js-bookmark_toggle': 'bookmarkToggle',
+			'click #js-update_forecast': 'forecastUpdate'
 		},
 		initialize: function(city) {
             this.city = city;
+            this.inBookmarks = false;
+            this.listenTo(Cities, 'reset', this.setCityPage);
         },
 		render: function() {
 			Index.toggleHeaderButtons();
 			Index.setTitle('Forecast: ' + this.city);
 
-	    	$('#content').html(this.$el.html(this.template({city: this.city})));
+	    	$('#content').html(this.$el.html(this.template({city: this.city, inBookmarks: this.inBookmarks})));
+
+	    	Cities.fetch({reset: true});
 
 	    	this.forecastRequest();
 	    },
@@ -24,8 +28,6 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 	    	updateForecastButton.addClass('active');
 
 	    	Forecast.getForecast(this.city, function(data) {
-            	console.dir(data);
-
             	_this.$('#city_forecast').html(_this.forecastTemplate(data));
 
             	updateForecastButton.removeClass('active');
@@ -37,11 +39,28 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 
 	    	this.forecastRequest();
 	    },
+	    setCityPage: function() {
+	    	this.inBookmarks = (Cities.inCollection(this.city) ? true : false);
+
+	    	this.setBookmarkButton();
+	    },
+	    setBookmarkButton: function() {
+	    	var _this = this,
+	    		btn = $('#js-bookmark_toggle');
+
+	    	btn.toggleClass('icon_bookmark_on', _this.inBookmarks)
+	    		.toggleClass('icon_bookmark_off', !_this.inBookmarks)
+				.attr('title', (_this.inBookmarks ? 'Remove from my cities' : 'Add to my cities'));
+	    },
 	    bookmarkToggle: function(e) {
 	    	e.preventDefault();
 	    	e.stopPropagation();
 
-	    	console.log(1);
+	    	Cities.toggleModel(this.city);
+
+	    	this.inBookmarks = !this.inBookmarks;
+
+	    	this.setBookmarkButton();
 	    }
 	});
 	return CityView; 

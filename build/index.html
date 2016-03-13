@@ -24,11 +24,11 @@
         <script type="text/template" id="main_template">
         	<div class="header" id="header">
         		<div class="header__layout clearfix">
-        			<a href="#" class="btn header__btn left js-index" id="header_menu">
+        			<a href="#" class="btn header__btn left js-index" id="header_menu" title="My cities">
         				<i class="icon icon_menu"></i>
         			</a>
         
-        			<a href="#/search/" class="btn header__btn right js-search" id="header_search">
+        			<a href="#/search/" class="btn header__btn right js-search" id="header_search" title="Search city">
         				<i class="icon icon_search"></i>
         			</a>
         		</div>
@@ -47,24 +47,45 @@
         <script type="text/template" id="list_link_template">
         	<% if (name) { %>
         		<li class="list__item">
-        			<a href="#/city/<%= link %>" class="btn btn_link"><%= name %></a>
+        			<a href="<%= link %>" class="btn btn_link"><%= name %></a>
         		</li>
         	<% } %>
         </script>
         <script type="text/template" id="city_template">
         	<div class="block">
-        		<a href="#" class="js-bookmark_toggle right">+</a>
+        		<a href="#" id="js-bookmark_toggle" class="right icon 
+        			<% if (inBookmarks === true) { %>
+        				icon_bookmark_on
+        			<% } else { %>
+        				icon_bookmark_off
+        			<% } %>
+        		"
+        			<% if (inBookmarks === true) { %>
+        				title="Remove from my cities"
+        			<% } else { %>
+        				title="Add to my cities"
+        			<% } %>
+        		></a>
         
         		<h1 class="title"><%= city %></h1>
         
         		<div class="clearfix"></div>
         
-        		<a href="#" class="btn btn_button js-update_forecast">
+        		<a href="#" id="js-update_forecast" class="btn btn_button">
         			<div class="icon icon_animate_rotate icon_inline icon_reload_black"></div>
         			Update Forecast
         		</a>
         
         		<div id="city_forecast"></div>
+        	</div>
+        </script>
+        <script type="text/template" id="block_template">
+        	<div class="block
+        		<% if (typeof(centeredContent) !== "undefined") { %>
+        			text-center
+        		<% } %>
+        	">
+        		<%= text %>
         	</div>
         </script>
         <script type="text/template" id="forecast_template">

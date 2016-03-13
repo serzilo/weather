@@ -33,7 +33,7 @@ define(['common/index'], function(Index) {
 									return "<b>" + str + "</b>";
 								});
 
-								return _this.listLinkTemplate({name: fixedName, link: encodeURIComponent(city)});
+								return _this.listLinkTemplate({name: fixedName, link: '#/city/' + encodeURIComponent(city)});
 							});
 
 						_this.$searchList.html(cities.join(''));
@@ -94,7 +94,11 @@ define(['common/index'], function(Index) {
 	    	$(e.currentTarget).addClass(this.activeClass);
 	    },
 	    selectCity: function() {
-	    	window.location = this.$searchList.find('.' + this.activeClass + ' a').attr('href');
+	    	var src = this.$searchList.find('.' + this.activeClass + ' a').attr('href');
+
+	    	if (src) {
+	    		window.location = src;
+	    	}
 	    }
 	});
 	return searchView; 

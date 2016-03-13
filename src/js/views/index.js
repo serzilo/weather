@@ -1,6 +1,7 @@
 define(['collections/cities', 'common/index'],function(Cities, Index) { 
 	var indexView = Backbone.View.extend({
 		template: _.template($('#list_template').html()),
+		blockTemplate: _.template($('#block_template').html()),
 		listLinkTemplate: _.template($('#list_link_template').html()),
 		initialize: function () {
 			this.listenTo(Cities, 'reset', this.fillList);
@@ -19,10 +20,17 @@ define(['collections/cities', 'common/index'],function(Cities, Index) {
 	    	Cities.fetch({reset: true});
 	    },
 	    fillList: function() {
-	    	var _this = this,
-	    		CitiesList = Cities.map(function(city) {
-	    		return _this.listLinkTemplate(city.toJSON());
-	    	}).join('');
+	    	var CitiesList = '';
+
+	    	if (Cities.length) {
+		    	var _this = this;
+
+		    	CitiesList = Cities.map(function(city) {
+		    		return _this.listLinkTemplate(city.toJSON());
+		    	}).join('');
+	    	} else {
+	    		CitiesList = this.blockTemplate({text: 'Your cities list is empty. Please, use a <a href="#/search/">search</a>.', centeredContent: true});
+	    	}
 
 	    	this.$list.html(CitiesList);
 	    }

@@ -1,5 +1,14 @@
 body {
 	font-size: 100%;
+	color: #323232;
+}
+
+a {
+	color: #A27C4F;
+
+	&:hover {
+		color: #C39A6A;
+	}
 }
 
 .btn {
@@ -28,6 +37,10 @@ body {
 			padding: 16px 40px 14px 15px;
 		}
 
+		&:hover {
+			color: #323232;
+		}
+
 		&:after {
 			.sprite(@next);
 			position: absolute;
@@ -47,6 +60,7 @@ body {
 
 		&:hover {
 			background: #f5f5f5;
+			color: #323232;
 		}
 
 		& .icon_inline {
@@ -132,6 +146,14 @@ body {
   .sprite(@reload-black);
 }
 
+.icon_bookmark_on {
+  .sprite(@bookmark-on);
+}
+
+.icon_bookmark_off {
+  .sprite(@bookmark-off);
+}
+
 @keyframes animateRotate {
     0% {
        transform: rotate(0deg);
@@ -139,4 +161,8 @@ body {
     100% {
        transform: rotate(360deg);
     }
+}
+
+.text-center {
+	text-align: center;
 }
