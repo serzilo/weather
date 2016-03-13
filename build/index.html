@@ -96,20 +96,32 @@
         		    _.each(list, function(item, key){
         
         		    var date = new Date(item.dt_txt),
+        				currentDate = new Date(),
         		    	day = date.getDate(),
+        		    	currentDay = currentDate.getDate(),
         		    	months = ["January","February","March","April","May","June","July","August","September","October","November","December"],
         		    	month = months[date.getMonth()],
+        		    	currentMonth = months[currentDate.getMonth()],
         		    	hours = date.getHours(),
         		    	minutes = date.getMinutes(),
         		    	time = hours + ':' + (minutes < 10 ? '0' : '') + minutes,
-        		    	showNewDay = (previousDay == day ? false : true);
+        		    	showNewDay = (previousDay == day ? false : true),
+        		    	today = (day === currentDay && month === currentMonth ? 'Today' : false);
         
         		    previousDay = day;
         		%>
         
         		<% if (showNewDay == true) { %>
-        			<div class="forecast__date">
-        				<%= day %> <%= month %>
+        			<div class="forecast__date
+        				<% if (today != false) { %>
+        					forecast__date_today
+        				<% } %>
+        			">
+        				<% if (today != false) { %>
+        					<%= today %>
+        				<% } else { %>
+        					<%= month %> <%= day %>
+        				<% } %>
         			</div>
         		<% } %>
         

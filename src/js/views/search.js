@@ -3,9 +3,13 @@ define(['common/index'], function(Index) {
 		template: _.template($('#list_template').html()),
 		listLinkTemplate: _.template($('#list_link_template').html()),
 		events: {
-	    	'input #search_input'  : 'citiesRequest',
-	    	'keydown #search_input'  : 'keydownHandler',
+	    	'input #search_input' 	    	: 'citiesRequest',
+	    	'keydown #search_input' 	    : 'keydownHandler',
+	    	'keyup #search_input'  			: 'keyupHandler',
 	    	'mouseover #cities_list_ul li'  : 'listItemHighlight'
+	    },
+	    inputEventSupport: function() {
+	    	return 'oninput' in document.getElementById("search_input");
 	    },
 	    itemClass: 'list__item',
 	    activeClass: 'list__item_active',
@@ -43,27 +47,36 @@ define(['common/index'], function(Index) {
 	    		_this.$searchList.html('');
 	    	}
 	    },
+	    KEYS : {
+    		up: 38,
+    		down: 40,
+    		enter: 13
+    	},
 	    keydownHandler: function(e) {
-	    	var KEYS = {
-		    		up: 38,
-		    		down: 40,
-		    		enter: 13
-		    	},
-	    		keyCode = e.keyCode,
+	    	var keyCode = e.keyCode,
 	    		value = e.target.value;
 
 	    	if (value.length >= this.minValueLength) {
-	    		if (keyCode == KEYS.up || keyCode == KEYS.down) {
+	    		if (keyCode == this.KEYS.up || keyCode == this.KEYS.down) {
 	    			e.preventDefault();
 	    			e.stopPropagation();
 
-	    			this.moveSelectedItem(keyCode == KEYS.up ? 0 : 1);
-	    		} else if (keyCode == KEYS.enter) {
+	    			this.moveSelectedItem(keyCode == this.KEYS.up ? 0 : 1);
+	    		} else if (keyCode == this.KEYS.enter) {
 	    			e.preventDefault();
 	    			e.stopPropagation();
 
 	    			this.selectCity();
-	    		}
+	    		} 
+	    	}
+	    },
+	    keyupHandler: function (e) {
+	    	if (this.inputEventSupport() === false) {
+		    	var keyCode = e.keyCode;
+
+		    	if (keyCode != this.KEYS.up && keyCode != this.KEYS.down && keyCode != this.KEYS.enter) {
+		    		this.citiesRequest(e);
+		    	}
 	    	}
 	    },
 	    moveSelectedItem: function(dir) {

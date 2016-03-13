@@ -23,7 +23,7 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 	    },
 	    forecastRequest: function() {
 	    	var _this = this,
-	    		updateForecastButton = $('.js-update_forecast');
+	    		updateForecastButton = $('#js-update_forecast');
 
 	    	updateForecastButton.addClass('active');
 
