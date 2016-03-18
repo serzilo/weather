@@ -1,1 +1,1 @@
-define(function(){var e=Backbone.Model.extend({defaults:{name:"City needs in a name",link:null},validate:function(e,n){return e.name&&e.link?void 0:"All attributes required."}});return e});
+define(function(){var e=Backbone.Model.extend({validate:function(e,n){return e.name&&e.link?void 0:"All attributes required."}});return e});

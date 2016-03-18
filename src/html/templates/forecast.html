@@ -1,24 +1,23 @@
 <script type="text/template" id="forecast_template">
 	<div class="forecast">
 		<%
-			var previousDay = null;
+			var previousDay = null,
+				months = ["January","February","March","April","May","June","July","August","September","October","November","December"],
+				currentDate = new Date(),
+				currentDay = currentDate.getDate(),
+				currentMonth = months[currentDate.getMonth()];
 
 		    _.each(list, function(item, key){
+			    var date = new Date(item.dt_txt.replace(/(\d+)-(\d+)-(\d+)/, '$2/$3/$1')),
+			    	day = date.getDate(),
+			    	month = months[date.getMonth()],
+			    	hours = date.getHours(),
+			    	minutes = date.getMinutes(),
+			    	time = hours + ':' + (minutes < 10 ? '0' : '') + minutes,
+			    	showNewDay = (previousDay == day ? false : true),
+			    	today = (day === currentDay && month === currentMonth ? 'Today' : false);
 
-		    var date = new Date(item.dt_txt),
-				currentDate = new Date(),
-		    	day = date.getDate(),
-		    	currentDay = currentDate.getDate(),
-		    	months = ["January","February","March","April","May","June","July","August","September","October","November","December"],
-		    	month = months[date.getMonth()],
-		    	currentMonth = months[currentDate.getMonth()],
-		    	hours = date.getHours(),
-		    	minutes = date.getMinutes(),
-		    	time = hours + ':' + (minutes < 10 ? '0' : '') + minutes,
-		    	showNewDay = (previousDay == day ? false : true),
-		    	today = (day === currentDay && month === currentMonth ? 'Today' : false);
-
-		    previousDay = day;
+			    previousDay = day;
 		%>
 
 		<% if (showNewDay == true) { %>
@@ -67,7 +66,7 @@
 							<span class="forecast__label">Pressure:</span> 
 						</td>
 						<td>
-							<%= item.main.pressure %>
+							<%= item.main.pressure %>hPa
 						</td>
 					</tr>	
 					<tr>

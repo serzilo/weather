@@ -20,6 +20,7 @@ define(['common/index'], function(Index) {
 	    	$('#content').html(this.$el.html(this.template({showSearchInput: true})));
 
 	    	this.$searchList = this.$('#cities_list_ul');
+
 	    	this.$('#search_input').focus();
 	    },
 	    minValueLength: 3,

@@ -3,6 +3,12 @@ define(['collections/cities', 'common/index'],function(Cities, Index) {
 		template: _.template($('#list_template').html()),
 		blockTemplate: _.template($('#block_template').html()),
 		listLinkTemplate: _.template($('#list_link_template').html()),
+		events: {
+	    	'mouseover #cities_list_ul li'  : 'listItemHighlight',
+	    	'mouseout #cities_list_ul li'   : 'listItemRemoveHighlight'
+	    },
+	    itemClass: 'list__item',
+	    activeClass: 'list__item_active',
 		initialize: function () {
 			this.listenTo(Cities, 'reset', this.fillList);
 		},
@@ -33,7 +39,14 @@ define(['collections/cities', 'common/index'],function(Cities, Index) {
 	    	}
 
 	    	this.$list.html(CitiesList);
-	    }
+	    },
+	    listItemRemoveHighlight: function(e) {
+	    	this.$list.find('.' + this.itemClass).removeClass(this.activeClass);
+	    },
+	    listItemHighlight: function(e) {
+	    	this.listItemRemoveHighlight(e);
+	    	$(e.currentTarget).addClass(this.activeClass);
+	    },
 	});
 	return indexView; 
 });
