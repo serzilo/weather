@@ -1,6 +1,7 @@
 define(['collections/cities', 'common/index', 'common/forecast'], function(Cities, Index, Forecast) { 
 	var CityView = Backbone.View.extend({
 		template: _.template($('#city_template').html()),
+		alertTemplate: _.template($('#alert_template').html()),
 		forecastTemplate: _.template($('#forecast_template').html()),
 		events: {
 			'click #js-bookmark_toggle': 'bookmarkToggle',
@@ -21,6 +22,9 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 
 	    	this.forecastRequest();
 	    },
+	    codes: {
+	    	SUCCESS: 200
+	    },
 	    forecastRequest: function() {
 	    	var _this = this,
 	    		updateForecastButton = $('#js-update_forecast');
@@ -28,7 +32,15 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 	    	updateForecastButton.addClass('active');
 
 	    	Forecast.getForecast(this.city, function(data) {
-            	_this.$('#city_forecast').html(_this.forecastTemplate(data));
+	    		if (data.cod == _this.codes.SUCCESS) {
+	    			_this.$('#city_forecast').html(_this.forecastTemplate(data));
+	    		} else {
+	    			_this.$('#city_forecast').html(_this.alertTemplate({text: data.message}));
+	    		}
+            	
+            	updateForecastButton.removeClass('active');
+            }, function() {
+            	_this.$('#city_forecast').html(_this.alertTemplate({text: 'Internal error'}));
 
             	updateForecastButton.removeClass('active');
             });
