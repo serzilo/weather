@@ -20,10 +20,7 @@ define(['collections/cities', 'common/index'],function(Cities, Index) {
 
 	    	this.$list = this.$('#cities_list_ul');
 
-	    	// Suppresses 'add' events with {reset: true} and prevents the app view
-			// from being re-rendered for every model. Only renders when the 'reset'
-			// event is triggered at the end of the fetch.
-	    	Cities.fetch({reset: true});
+	    	this.fillList();
 	    },
 	    fillList: function() {
 	    	var CitiesList = '';

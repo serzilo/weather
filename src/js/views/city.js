@@ -18,7 +18,7 @@ define(['collections/cities', 'common/index', 'common/forecast'], function(Citie
 
 	    	$('#content').html(this.$el.html(this.template({city: this.city, inBookmarks: this.inBookmarks})));
 
-	    	Cities.fetch({reset: true});
+	    	this.setCityPage();
 
 	    	this.forecastRequest();
 	    },
